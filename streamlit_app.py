@@ -12,6 +12,8 @@ from streamlit_folium import st_folium, folium_static
 @st.cache_resource
 def init_connection():
     return psycopg2.connect(**st.secrets["postgres"])
+
+
 #
 
 conn = init_connection()
@@ -20,23 +22,24 @@ conn = init_connection()
 ## Uses st.cache_data to only rerun when the query changes or after 10 min.
 
 placeholder = st.empty()
-#m = folium.Map(location=[df.lat.mean(), df.lon.mean()], zoom_start=3, control_scale=True)
-m = folium.Map(control_scale=True)
-
+# m = folium.Map(location=[df.lat.mean(), df.lon.mean()], zoom_start=3, control_scale=True)
+m = folium.Map()
 
 while 1 == 1:
     with placeholder.container():
 
-        #@st.cache_data(ttl=1)
+        # @st.cache_data(ttl=1)
         def run_query(query):
             with conn.cursor() as cur:
                 cur.execute(query)
                 return cur.fetchall()
 
+
         rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
-        df = pd.DataFrame(rows, columns =['location', 'lat', 'lon', 'average_measure','number_of_measures'])
+        df = pd.DataFrame(rows, columns=['location', 'lat', 'lon', 'average_measure', 'number_of_measures'])
         st.dataframe(df)
 
+        fg.removeFrom(m)
         fg = folium.FeatureGroup(name="measures")
 
         for i, row in df.iterrows():
@@ -48,17 +51,19 @@ while 1 == 1:
 
             # Add each row to the map
             marker = folium.Marker(location=[row['lat'], row['lon']],
-                          popup=popup, c=row['average_measure'])
+                                   popup=popup, c=row['average_measure'])
             fg.add_child(marker)
 
-        #st_data = st_folium(m, width=700)
-
+        # st_data = st_folium(m, width=700)
         out = st_folium(
             m,
             feature_group_to_add=fg,
+            center=center,
             width=1200,
             height=500,
         )
+
         time.sleep(5)
-#for row in rows:
+
+# for row in rows:
 #    st.write(f"{row[0]} has a :{row[1]}:")

@@ -39,7 +39,6 @@ while 1 == 1:
         df = pd.DataFrame(rows, columns=['location', 'lat', 'lon', 'average_measure', 'number_of_measures'])
         st.dataframe(df)
 
-        fg.removeFrom(m)
         fg = folium.FeatureGroup(name="measures")
 
         for i, row in df.iterrows():
@@ -50,8 +49,7 @@ while 1 == 1:
             popup = folium.Popup(iframe, min_width=300, max_width=300)
 
             # Add each row to the map
-            marker = folium.Marker(location=[row['lat'], row['lon']],
-                                   popup=popup, c=row['average_measure'])
+            marker = folium.Marker(location=[row['lat'], row['lon']])
             fg.add_child(marker)
 
         # st_data = st_folium(m, width=700)

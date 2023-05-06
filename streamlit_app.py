@@ -47,9 +47,9 @@ while 1 == 1:
             popup = folium.Popup(iframe, min_width=300, max_width=300)
 
             # Add each row to the map
-            m = folium.Marker(location=[row['lat'], row['lon']],
+            marker = folium.Marker(location=[row['lat'], row['lon']],
                           popup=popup, c=row['average_measure'])
-            fg.add_child(m)
+            fg.add_child(marker)
 
         #st_data = st_folium(m, width=700)
 
@@ -59,7 +59,6 @@ while 1 == 1:
             width=1200,
             height=500,
         )
-
         time.sleep(5)
 #for row in rows:
 #    st.write(f"{row[0]} has a :{row[1]}:")

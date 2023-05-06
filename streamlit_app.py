@@ -20,8 +20,24 @@ In the meantime, below is an example of what you can do with just a few lines of
 def init_connection():
     return psycopg2.connect(**st.secrets["postgres"])
 
+conn = init_connection()
+
+# Perform query.
+# Uses st.cache_data to only rerun when the query changes or after 10 min.
+@st.cache_data(ttl=60)
+def run_query(query):
+    with conn.cursor() as cur:
+        cur.execute(query)
+        return cur.fetchall()
+
+rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
+
+# Print results.
+for row in rows:
+    st.write(f"{row[0]} has a :{row[1]}:")
+
 with st.echo(code_location='below'):
-    "Im in"
+    "Im in..."
     total_points = st.slider("Number of points in spiral", 1, 5000, 2000)
     num_turns = st.slider("Number of turns in spiral", 1, 100, 9)
 
@@ -41,4 +57,6 @@ with st.echo(code_location='below'):
     st.altair_chart(alt.Chart(pd.DataFrame(data), height=500, width=500)
         .mark_circle(color='#0068c9', opacity=0.5)
         .encode(x='x:Q', y='y:Q'))
+
+
 

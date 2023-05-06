@@ -22,7 +22,10 @@ def run_query(query):
         return cur.fetchall()
 
 rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
+df = pd.DataFrame(rows, columns =['location', 'lat', 'lon', 'average_measure','number_of_measures'])
 
 # Print results.
-for row in rows:
-    st.write(f"{row[0]} has a :{row[1]}:")
+df = pd.DataFrame()
+st.dataframe(df)
+#for row in rows:
+#    st.write(f"{row[0]} has a :{row[1]}:")

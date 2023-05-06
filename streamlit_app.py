@@ -7,6 +7,7 @@ import psycopg2
 import time
 import folium
 from streamlit_folium import st_folium, folium_static
+from folium.features import DivIcon
 
 
 @st.cache_resource
@@ -34,7 +35,8 @@ for i, row in df.iterrows():
 
     # Add each row to the map
     folium.Marker(location=[row['lat'], row['lon']],
-                  popup=popup, c=row['location']).add_to(m)
+                  popup=popup, c=row['location'],
+                  ).add_to(m)
     #folium.Marker(location=[row['lat'], row['lon']],
     #             popup=row['location']).add_to(m)
 
@@ -48,7 +50,7 @@ while 1 == 1:
 
         rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
         df = pd.DataFrame(rows, columns=['location', 'lat', 'lon', 'average_measure', 'number_of_measures'])
-        st.dataframe(df, width=700)
+        st.dataframe(df, width=700, height=1400)
 
         time.sleep(5)
 

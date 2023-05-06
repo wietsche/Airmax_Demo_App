@@ -20,16 +20,13 @@ placeholder = st.empty()
 
 with placeholder.container():
 
-    @st.cache_data(ttl=1)
+    #@st.cache_data(ttl=1)
     def run_query(query):
         with conn.cursor() as cur:
             cur.execute(query)
             return cur.fetchall()
 
     rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
-    df = pd.DataFrame(rows, columns =['location', 'lat', 'lon', 'average_measure','number_of_measures'])
-
-#    Print results.
     df = pd.DataFrame(rows, columns =['location', 'lat', 'lon', 'average_measure','number_of_measures'])
     st.dataframe(df)
 #for row in rows:

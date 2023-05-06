@@ -56,7 +56,6 @@ while 1 == 1:
         out = st_folium(
             m,
             feature_group_to_add=fg,
-            center=center,
             width=1200,
             height=500,
         )

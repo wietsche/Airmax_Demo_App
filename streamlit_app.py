@@ -52,7 +52,7 @@ while 1 == 1:
         df = pd.DataFrame(rows, columns=['location', 'lat', 'lon', 'average_measure', 'number_of_measures'])
         st.dataframe(df, width=700, height=1400)
 
-        time.sleep(5)
+        time.sleep(1)
 
 # for row in rows:
 #    st.write(f"{row[0]} has a :{row[1]}:")

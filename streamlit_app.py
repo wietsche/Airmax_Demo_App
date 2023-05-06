@@ -19,17 +19,18 @@ conn = init_connection()
 
 placeholder = st.empty()
 
-with placeholder.container():
+while 1 == 1:
+    with placeholder.container():
 
-    #@st.cache_data(ttl=1)
-    def run_query(query):
-        with conn.cursor() as cur:
-            cur.execute(query)
-            return cur.fetchall()
+        #@st.cache_data(ttl=1)
+        def run_query(query):
+            with conn.cursor() as cur:
+                cur.execute(query)
+                return cur.fetchall()
 
-    rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
-    df = pd.DataFrame(rows, columns =['location', 'lat', 'lon', 'average_measure','number_of_measures'])
-    st.dataframe(df)
-    time.sleep(1)
+        rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
+        df = pd.DataFrame(rows, columns =['location', 'lat', 'lon', 'average_measure','number_of_measures'])
+        st.dataframe(df)
+        time.sleep(1)
 #for row in rows:
 #    st.write(f"{row[0]} has a :{row[1]}:")

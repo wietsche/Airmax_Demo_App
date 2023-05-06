@@ -20,6 +20,8 @@ conn = init_connection()
 ## Uses st.cache_data to only rerun when the query changes or after 10 min.
 
 placeholder = st.empty()
+#m = folium.Map(location=[df.lat.mean(), df.lon.mean()], zoom_start=3, control_scale=True)
+m = folium.Map(control_scale=True)
 
 while 1 == 1:
     with placeholder.container():
@@ -33,9 +35,9 @@ while 1 == 1:
         rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
         df = pd.DataFrame(rows, columns =['location', 'lat', 'lon', 'average_measure','number_of_measures'])
         st.dataframe(df)
-        
-        m = folium.Map(location=[df.lat.mean(), df.lon.mean()],
-                         zoom_start=3, control_scale=True)
+
+
+
         for i, row in df.iterrows():
             # Setup the content of the popup
             iframe = folium.IFrame('Measure:' + str(row["average_measure"]))

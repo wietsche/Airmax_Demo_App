@@ -34,7 +34,7 @@ while 1 == 1:
         df = pd.DataFrame(rows, columns =['location', 'lat', 'lon', 'average_measure','number_of_measures'])
         st.dataframe(df)
         
-        m = folium.Map(location=[df.latitude.mean(), df.longitude.mean()],
+        m = folium.Map(location=[df.lat.mean(), df.lon.mean()],
                          zoom_start=3, control_scale=True)
         for i, row in df.iterrows():
             # Setup the content of the popup

@@ -16,25 +16,25 @@ forums](https://discuss.streamlit.io).
 In the meantime, below is an example of what you can do with just a few lines of code:
 """
 
-@st.cache_resource
-def init_connection():
-    return psycopg2.connect(**st.secrets["postgres"])
+#@st.cache_resource
+#def init_connection():
+#    return psycopg2.connect(**st.secrets["postgres"])
+#
+#conn = init_connection()
+#
+## Perform query.
+## Uses st.cache_data to only rerun when the query changes or after 10 min.
+#@st.cache_data(ttl=60)
+#def run_query(query):
+#    with conn.cursor() as cur:
+#        cur.execute(query)
+#        return cur.fetchall()
 
-conn = init_connection()
-
-# Perform query.
-# Uses st.cache_data to only rerun when the query changes or after 10 min.
-@st.cache_data(ttl=60)
-def run_query(query):
-    with conn.cursor() as cur:
-        cur.execute(query)
-        return cur.fetchall()
-
-rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
+#rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
 
 # Print results.
-for row in rows:
-    st.write(f"{row[0]} has a :{row[1]}:")
+#for row in rows:
+#    st.write(f"{row[0]} has a :{row[1]}:")
 
 with st.echo(code_location='below'):
     st.write(**st.secrets["postgres"])

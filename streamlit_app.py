@@ -29,5 +29,6 @@ with placeholder.container():
     rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
     df = pd.DataFrame(rows, columns =['location', 'lat', 'lon', 'average_measure','number_of_measures'])
     st.dataframe(df)
+    time.sleep(1)
 #for row in rows:
 #    st.write(f"{row[0]} has a :{row[1]}:")

@@ -4,6 +4,7 @@ import math
 import pandas as pd
 import streamlit as st
 import psycopg2
+import time
 
 
 @st.cache_resource

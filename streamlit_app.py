@@ -50,7 +50,7 @@ while 1 == 1:
 
         rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
         df = pd.DataFrame(rows, columns=['location', 'lat', 'lon', 'average_measure', 'number_of_measures'])
-        st.dataframe(df, width=700, height=1400)
+        st.dataframe(df, width=700, height=900)
 
         time.sleep(1)
 

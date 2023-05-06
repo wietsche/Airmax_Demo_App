@@ -33,7 +33,7 @@ for i, row in df.iterrows():
     popup = folium.Popup(iframe, min_width=300, max_width=300)
 
     # Add each row to the map
-    folium.Marker(location=[row['latitude'], row['longitude']],
+    folium.Marker(location=[row['lat'], row['lon']],
                   popup=popup, c=row['location']).add_to(m)
 
     st_data = st_folium(m, width=700)

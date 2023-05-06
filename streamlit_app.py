@@ -5,6 +5,8 @@ import pandas as pd
 import streamlit as st
 import psycopg2
 import time
+import folium
+from streamlit_folium import st_folium, folium_static
 
 
 @st.cache_resource
@@ -31,6 +33,22 @@ while 1 == 1:
         rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
         df = pd.DataFrame(rows, columns =['location', 'lat', 'lon', 'average_measure','number_of_measures'])
         st.dataframe(df)
+        
+        m = folium.Map(location=[df.latitude.mean(), df.longitude.mean()],
+                         zoom_start=3, control_scale=True)
+        for i, row in df.iterrows():
+            # Setup the content of the popup
+            iframe = folium.IFrame('Measure:' + str(row["average_measure"]))
+
+            # Initialise the popup using the iframe
+            popup = folium.Popup(iframe, min_width=300, max_width=300)
+
+            # Add each row to the map
+            folium.Marker(location=[row['lat'], row['lon']],
+                          popup=popup, c=row['average_measure']).add_to(m)
+
+        st_data = st_folium(m, width=700)
+
         time.sleep(1)
 #for row in rows:
 #    st.write(f"{row[0]} has a :{row[1]}:")

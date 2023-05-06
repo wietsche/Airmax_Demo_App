@@ -23,7 +23,7 @@ conn = init_connection()
 #map from existing data
 rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
 df = pd.DataFrame(rows, columns=['location', 'lat', 'lon', 'average_measure', 'number_of_measures'])
-m = folium.Map(location=[df.lat.mean(), df.lon.mean()], zoom_start=3, control_scale=True)
+m = folium.Map(location=[df.lat.mean(), df.lon.mean()], zoom_start=9, control_scale=True)
 
 for i, row in df.iterrows():
     # Setup the content of the popup
@@ -33,10 +33,10 @@ for i, row in df.iterrows():
     popup = folium.Popup(iframe, min_width=300, max_width=300)
 
     # Add each row to the map
-    #folium.Marker(location=[row['lat'], row['lon']],
-    #              popup=popup, c=row['location']).add_to(m)
     folium.Marker(location=[row['lat'], row['lon']],
-                  popup=row['location']).add_to(m)
+                  popup=popup, c=row['location']).add_to(m)
+    #folium.Marker(location=[row['lat'], row['lon']],
+    #             popup=row['location']).add_to(m)
 
 st_data = st_folium(m, width=700)
 

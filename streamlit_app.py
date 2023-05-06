@@ -36,7 +36,7 @@ for i, row in df.iterrows():
     folium.Marker(location=[row['lat'], row['lon']],
                   popup=popup, c=row['location']).add_to(m)
 
-    st_data = st_folium(m, width=700)
+st_data = st_folium(m, width=700)
 
 
 placeholder = st.empty()

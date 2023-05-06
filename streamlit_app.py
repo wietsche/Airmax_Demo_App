@@ -43,10 +43,10 @@ while 1 == 1:
 
         for i, row in df.iterrows():
             # Setup the content of the popup
-            iframe = folium.IFrame('Measure:' + str(row["average_measure"]))
+            #iframe = folium.IFrame('Measure:' + str(row["average_measure"]))
 
             # Initialise the popup using the iframe
-            popup = folium.Popup(iframe, min_width=300, max_width=300)
+            #popup = folium.Popup(iframe, min_width=300, max_width=300)
 
             # Add each row to the map
             marker = folium.Marker(location=[row['lat'], row['lon']])

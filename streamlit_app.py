@@ -25,7 +25,7 @@ rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures
 df = pd.DataFrame(rows, columns =['location', 'lat', 'lon', 'average_measure','number_of_measures'])
 
 # Print results.
-df = pd.DataFrame()
+df = pd.DataFrame(rows, columns =['location', 'lat', 'lon', 'average_measure','number_of_measures'])
 st.dataframe(df)
 #for row in rows:
 #    st.write(f"{row[0]} has a :{row[1]}:")

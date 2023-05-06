@@ -23,6 +23,7 @@ placeholder = st.empty()
 #m = folium.Map(location=[df.lat.mean(), df.lon.mean()], zoom_start=3, control_scale=True)
 m = folium.Map(control_scale=True)
 
+
 while 1 == 1:
     with placeholder.container():
 
@@ -36,7 +37,7 @@ while 1 == 1:
         df = pd.DataFrame(rows, columns =['location', 'lat', 'lon', 'average_measure','number_of_measures'])
         st.dataframe(df)
 
-
+        fg = folium.FeatureGroup(name="measures")
 
         for i, row in df.iterrows():
             # Setup the content of the popup
@@ -46,11 +47,20 @@ while 1 == 1:
             popup = folium.Popup(iframe, min_width=300, max_width=300)
 
             # Add each row to the map
-            folium.Marker(location=[row['lat'], row['lon']],
-                          popup=popup, c=row['average_measure']).add_to(m)
+            marker folium.Marker(location=[row['lat'], row['lon']],
+                          popup=popup, c=row['average_measure'])
+            fg.add_child(m)
 
-        st_data = st_folium(m, width=700)
+        #st_data = st_folium(m, width=700)
 
-        time.sleep(1)
+        out = st_folium(
+            m,
+            feature_group=fg,
+            center=center,
+            width=1200,
+            height=500,
+        )
+
+        time.sleep(5)
 #for row in rows:
 #    st.write(f"{row[0]} has a :{row[1]}:")

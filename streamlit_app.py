@@ -22,8 +22,8 @@ conn = init_connection()
 
 #map from existing data
 rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
-m = folium.Map(location=[df.lat.mean(), df.lon.mean()], zoom_start=3, control_scale=True)
 df = pd.DataFrame(rows, columns=['location', 'lat', 'lon', 'average_measure', 'number_of_measures'])
+m = folium.Map(location=[df.lat.mean(), df.lon.mean()], zoom_start=3, control_scale=True)
 
 for i, row in df.iterrows():
     # Setup the content of the popup

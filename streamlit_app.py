@@ -55,10 +55,7 @@ while 1 == 1:
         # st_data = st_folium(m, width=700)
         out = st_folium(
             m,
-            feature_group_to_add=fg,
-            width=1200,
-            height=500,
-        )
+            feature_group_to_add=fg)
 
         time.sleep(5)
 

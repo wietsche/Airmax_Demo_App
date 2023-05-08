@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import streamlit as st
 import psycopg2
 import time
@@ -57,6 +58,22 @@ while 1 == 1:
         df = pd.DataFrame(rows, columns=['location', 'lat', 'lon', 'average_measure', 'number_of_measures'])
         st.dataframe(df, width=700)
 
-        st.map(df[['lat','lon']])
+        data = df[['lat','lon','average_measure']]
+
+        midpoint = (np.average(data['lat']), np.average(data['lon']))
+        st.deck_gl_chart(
+            viewport={
+                'latitude': midpoint[0],
+                'longitude': midpoint[1],
+                'zoom': 4
+            },
+            layers=[{
+                'type': 'ScatterplotLayer',
+                'data': data,
+                'radiusScale': 250,
+                'radiusMinPixels': 5,
+                'getFillColor': [248, 24, 148],
+            }]
+        )
 
         time.sleep(1)

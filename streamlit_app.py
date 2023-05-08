@@ -1,6 +1,3 @@
-from collections import namedtuple
-import altair as alt
-import math
 import pandas as pd
 import streamlit as st
 import psycopg2
@@ -8,7 +5,7 @@ import time
 import folium
 from streamlit_folium import st_folium
 
-st.title('Airmax demonstration')
+st.title('Airmax Demonstration App')
 
 @st.cache_resource
 def init_connection():
@@ -21,7 +18,8 @@ def run_query(query):
 
 conn = init_connection()
 
-#map from existing data
+# create static map from existing data
+# TODO: dynamic map updates
 rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
 df = pd.DataFrame(rows, columns=['location', 'lat', 'lon', 'average_measure', 'number_of_measures'])
 m = folium.Map(location=[df.lat.mean(), df.lon.mean()], zoom_start=9, control_scale=True)
@@ -37,11 +35,8 @@ for i, row in df.iterrows():
     folium.Marker(location=[row['lat'], row['lon']],
                   popup=popup, c=row['location'],
                   ).add_to(m)
-    #folium.Marker(location=[row['lat'], row['lon']],
-    #             popup=row['location']).add_to(m)
 
 st_data = st_folium(m, width=700)
-
 
 placeholder = st.empty()
 
@@ -53,6 +48,3 @@ while 1 == 1:
         st.dataframe(df, width=700, height=900)
 
         time.sleep(1)
-
-# for row in rows:
-#    st.write(f"{row[0]} has a :{row[1]}:")

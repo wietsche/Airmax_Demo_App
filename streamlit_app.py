@@ -43,8 +43,17 @@ placeholder = st.empty()
 while 1 == 1:
     with placeholder.container():
 
-        rows = run_query("SELECT location, lat, lon, average_measure, number_of_measures FROM public.openaq_agg;")
+        rows = run_query("""
+            SELECT 
+            location
+            , lat
+            , lon
+            , average_measure
+            , number_of_measures 
+            FROM public.openaq_agg
+            WHERE number_of_measures > 0;
+            """)
         df = pd.DataFrame(rows, columns=['location', 'lat', 'lon', 'average_measure', 'number_of_measures'])
-        st.dataframe(df, width=700, height=900)
+        st.dataframe(df, width=700)
 
         time.sleep(1)

@@ -6,9 +6,9 @@ import streamlit as st
 import psycopg2
 import time
 import folium
-from streamlit_folium import st_folium, folium_static
-from folium.features import DivIcon
+from streamlit_folium import st_folium
 
+st.title('Airmax demonstration')
 
 @st.cache_resource
 def init_connection():

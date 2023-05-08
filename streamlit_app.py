@@ -5,6 +5,7 @@ import time
 import folium
 from streamlit_folium import st_folium
 
+
 st.title('Airmax Demonstration App')
 
 @st.cache_resource
@@ -55,5 +56,7 @@ while 1 == 1:
             """)
         df = pd.DataFrame(rows, columns=['location', 'lat', 'lon', 'average_measure', 'number_of_measures'])
         st.dataframe(df, width=700)
+
+        st.map(df[['lat','lon']])
 
         time.sleep(1)
